@@ -1,9 +1,9 @@
 import express, { json } from 'express';
 import initializeDatabase from './db/index.js';
 const app = express();
-import cors from 'cors';
-import { addUserController } from './controllers/user.controller.js';
-import { authVerify } from './middleware/index.js';
+// import cors from 'cors';
+import { userProfileController } from './controllers/user.controller.js';
+import  authVerify  from './middleware/index.js';
 import { loginController, signUpController } from './Auth/index.js';
 app.use(json());
 
@@ -25,9 +25,9 @@ app.get('/', (req, res) => {
   res.send('sever is running');
 });
 
-app.post('/user',authVerify,addUserController)
-app.post('/signup',signUpController)
-app.post('/login',loginController)
+app.post('/signup', signUpController);
+app.post('/login', loginController);
+app.get('/user/:userId', authVerify,userProfileController);
 
 // if router is not found
 app.use((req, res) => {
